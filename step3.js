@@ -26,27 +26,35 @@ async function webCat(url) {
 
 }
 
-function catWrite(path, filename) {
 
-
-
-    let content = fs.readFile(filename, 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-            process.exit(1);
-        }
-        let content = data;
-        return content;
-    })
-
-    console.log(content)
-
+function write(path, content, filename) {
     fs.writeFile(path, content, 'utf8', function (err) {
         if (err) {
             console.error(err);
             process.exit(1);
+
+        } else {
+            console.log(`no output, but ${path} contains contents of ${filename}`)
         }
-        console.log(`no output, but ${path} contains contents of ${filename}`)
+
+    })
+}
+
+
+
+
+function catWrite(path, filename) {
+    fs.readFile(filename, 'utf8', (err, data) => {
+        if (err) {
+            // console.log(err);
+            // process.exit(1);
+            // write(path, webCat(filename), filename);
+            console.log(webCat(filename));
+        }
+        else {
+            write(path, data, filename);
+        }
+
     })
 }
 
